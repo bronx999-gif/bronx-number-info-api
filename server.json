@@ -1,0 +1,68 @@
+import express from "express";
+const app = express();
+
+// API key (Render env variable se ayegi)
+const API_KEY = process.env.API_KEY || "jhat-ke-pakode";
+
+app.get("/", (req, res) => {
+  res.send("Number Info API Working 💯");
+});
+
+// MAIN API
+app.get("/info", (req, res) => {
+  const { num, key } = req.query;
+
+  // Key check
+  if (!key || key !== API_KEY) {
+    return res.status(401).json({
+      success: false,
+      message: "Invalid API key"
+    });
+  }
+
+  // Number check
+  if (!num) {
+    return res.status(400).json({
+      success: false,
+      message: "Please provide ?num="
+    });
+  }
+
+  // Your JSON response
+  const data = {
+    success: true,
+    result: [
+      {
+        id: 1205627021,
+        mobile: "7676184626",
+        name: "Shivalingappa",
+        father_name: "Durugappa",
+        address: "S/O: Durugappa!257!!harijana colony!nadanga!Nadanga!Bellary!Karnataka!583114",
+        alt_mobile: "",
+        circle: "AIRTEL KARNATKA",
+        id_number: "",
+        email: ""
+      },
+      {
+        id: 1205627022,
+        mobile: "7676184626",
+        name: "Shivalingappa",
+        father_name: "Durugappa",
+        address: "S/O  Durugappa!!257 harijana colony!nadanga!Nadanga Bellary!Karnataka!583114",
+        alt_mobile: "919901542381",
+        circle: "KARNATAKA JIO",
+        id_number: "",
+        email: ""
+      }
+    ],
+    credit: "@CodeVortexHere"
+  };
+
+  return res.json(data);
+});
+
+// PORT (Render automatically gives port)
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
